@@ -1,0 +1,729 @@
+<div class="app-shell">
+
+  <!-- =========================================
+       TOP HEADER
+  ========================================== -->
+
+  <header class="topbar">
+
+    <div class="brand-mark">
+      ERP
+    </div>
+
+    <div class="search">
+
+      <span>⌕</span>
+
+      <input
+        placeholder="Search anything (Invoices, Customers, Items)"
+        (input)="search($any($event.target).value)"
+      >
+
+    </div>
+
+    <div class="company-pill">
+      FARATH ALMAZNI GOODS WHOLESALERS LLC - SHJ
+    </div>
+
+  </header>
+
+
+  <!-- =========================================
+       PAGE
+  ========================================== -->
+
+  <main class="page">
+
+    <!-- =======================================
+         PAGE HEADING
+    ======================================== -->
+
+    <div class="page-heading">
+
+      <h1>
+        Cost Center
+      </h1>
+
+      <div class="actions">
+
+        <button
+          type="button"
+          (click)="newForm()"
+        >
+          Add
+        </button>
+
+        <button
+          type="button"
+          (click)="showList()"
+        >
+          List
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- =======================================
+         NOTICES
+    ======================================== -->
+
+    <div
+      *ngIf="message"
+      class="notice success"
+    >
+      {{ message }}
+    </div>
+
+    <div
+      *ngIf="error"
+      class="notice error"
+    >
+      {{ error }}
+    </div>
+
+
+    <!-- =======================================
+         FORM
+    ======================================== -->
+
+    <section
+      *ngIf="mode === 'form'"
+      class="card"
+    >
+
+      <!-- =====================================
+           COST CENTER FIELDS
+      ====================================== -->
+
+      <div class="cost-center-fields">
+
+        <!-- SYSID -->
+
+        <div class="field sysid-field">
+
+          <label>
+            Cost Center Sysid
+          </label>
+
+          <input
+            type="number"
+            [(ngModel)]="form.sysId"
+            placeholder="Enter Cost Center Sysid"
+          >
+
+        </div>
+
+
+        <!-- CODE -->
+
+        <div class="field code-field">
+
+          <label>
+            Cost Center Code
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="form.code"
+            placeholder="Enter Cost Center Code"
+          >
+
+        </div>
+
+
+        <!-- NAME -->
+
+        <div class="field name-field">
+
+          <label>
+            Cost Center Name
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="form.name"
+            placeholder="Enter Cost Center Name"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================
+           ACTIVATION & DEACTIVATION
+      ====================================== -->
+
+      <h2>
+        Activation &amp; Deactivation
+      </h2>
+
+      <div class="activation-section">
+
+        <!-- Y/N -->
+
+        <div class="activation-yn">
+
+          <input
+            type="checkbox"
+            [checked]="
+              form.activationDeactivationYn === 'Y'
+            "
+            (change)="
+              toggleActivation(
+                $any($event.target).checked
+              )
+            "
+          >
+
+          <label>
+            Activation &amp; Deactivation Y/N
+          </label>
+
+        </div>
+
+        <div class="field activation-code">
+
+          <label>
+            Activation &amp; Deactivation Code
+          </label>
+
+          <div class="lookup-control">
+
+          <input
+            type="text"
+            [(ngModel)]="
+              form.activationDeactivationCode
+            "
+            placeholder="Select Code"
+          >
+
+          <select
+            class="lookup-button"
+            [ngModel]="
+              form.activationDeactivationSysId
+            "
+            (ngModelChange)="
+              selectActivation(
+                getActivationById($event)
+              )
+            "
+          >
+
+            <option
+              [ngValue]="null"
+            >
+              ...
+            </option>
+
+            <option
+              *ngFor="
+                let item of activation
+              "
+              [ngValue]="item.sysId"
+            >
+              {{ item.code }} - {{ item.name }}
+            </option>
+
+          </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- NAME -->
+
+        <div class="field activation-name">
+
+          <label>
+            Activation &amp; Deactivation Name
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="
+              form.activationDeactivationName
+            "
+            placeholder="Activation / Deactivation Name"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================
+           APPLICABLE COMPANY DETAILS
+      ====================================== -->
+
+      <h2>
+        Applicable Company Details
+      </h2>
+
+
+      <div class="table-wrap">
+
+        <table>
+
+          <!-- TABLE HEADER -->
+
+          <thead>
+
+            <tr>
+
+              <th>
+                SysID
+              </th>
+
+              <th>
+                Applicable Company Code
+              </th>
+
+              <th>
+                Applicable Company Name
+              </th>
+
+              <th>
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <!-- TABLE BODY -->
+
+          <tbody>
+
+            <!-- =================================
+                 INITIAL ... ROW
+
+                 IMPORTANT:
+                 This is NOT a dropdown.
+                 It is ONLY a visual ... box.
+            ================================== -->
+
+            <tr
+              *ngIf="companyLookupMode"
+              class="company-lookup-row"
+            >
+
+              <!-- ONE CELL ACROSS FIRST 3 COLUMNS -->
+
+              <td
+                colspan="3"
+                class="company-lookup-cell"
+              >
+
+                <button
+                  type="button"
+                  class="center-company-dots"
+                  aria-label="Company lookup"
+                >
+                  ...
+                </button>
+
+              </td>
+
+
+              <!-- ACTIONS -->
+
+              <td
+                class="actions-cell"
+              >
+
+                <div class="row-actions">
+
+                  <!-- DELETE -->
+
+                  <button
+                    type="button"
+                    class="delete-row"
+                    title="Delete"
+                    (click)="removeRow(0)"
+                  >
+
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+
+                      <path d="M3 6h18"></path>
+
+                      <path d="M8 6V4h8v2"></path>
+
+                      <path
+                        d="M19 6l-1 14H6L5 6"
+                      ></path>
+
+                      <path d="M10 11v5"></path>
+
+                      <path d="M14 11v5"></path>
+
+                    </svg>
+
+                  </button>
+
+
+                  <!-- ADD ROW -->
+
+                  <button
+                    type="button"
+                    class="add-row"
+                    (click)="addRow()"
+                  >
+                    + Add Row
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+
+            <!-- =================================
+                 NORMAL COMPANY ROWS
+
+                 These appear after the FIRST
+                 Add Row click.
+            ================================== -->
+
+            <ng-container
+              *ngIf="!companyLookupMode"
+            >
+
+              <tr
+                *ngFor="
+                  let row of form.companies;
+                  let i = index
+                "
+              >
+
+                <!-- SYSID -->
+
+                <td>
+
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      row.companySysId
+                    "
+                    placeholder="SysID"
+                  >
+
+                </td>
+
+
+                <!-- COMPANY CODE -->
+
+                <td>
+
+                  <input
+                    type="text"
+                    [(ngModel)]="
+                      row.companyCode
+                    "
+                    placeholder="Applicable Company Code"
+                  >
+
+                </td>
+
+
+                <!-- COMPANY NAME -->
+
+                <td>
+
+                  <input
+                    type="text"
+                    [(ngModel)]="
+                      row.companyName
+                    "
+                    placeholder="Applicable Company Name"
+                  >
+
+                </td>
+
+
+                <!-- ACTIONS -->
+
+                <td
+                  class="actions-cell"
+                >
+
+                  <div class="row-actions">
+
+                    <!-- DELETE -->
+
+                    <button
+                      type="button"
+                      class="delete-row"
+                      title="Delete"
+                      (click)="removeRow(i)"
+                    >
+
+                      <svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+
+                        <path d="M3 6h18"></path>
+
+                        <path d="M8 6V4h8v2"></path>
+
+                        <path
+                          d="M19 6l-1 14H6L5 6"
+                        ></path>
+
+                        <path d="M10 11v5"></path>
+
+                        <path d="M14 11v5"></path>
+
+                      </svg>
+
+                    </button>
+
+
+                    <!-- ADD ROW -->
+
+                    <button
+                      type="button"
+                      class="add-row"
+                      (click)="addRow()"
+                    >
+                      + Add Row
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            </ng-container>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- =====================================
+           FOOTER BUTTONS
+      ====================================== -->
+
+      <div class="footer-actions">
+
+        <button
+          type="button"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="primary"
+          [disabled]="saving"
+          (click)="save()"
+        >
+          {{ saving ? 'Saving...' : 'Save' }}
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================
+         LIST
+    ======================================== -->
+
+    <section
+      *ngIf="mode === 'list'"
+      class="card list-card"
+    >
+
+      <div class="list-title">
+
+        <strong>
+          Cost Centers
+        </strong>
+
+        <span>
+          {{ centers.length }} record(s)
+        </span>
+
+        <button
+          type="button"
+          (click)="newForm()"
+        >
+          + Add Cost Center
+        </button>
+
+      </div>
+
+
+      <div
+        *ngIf="loading"
+        class="empty"
+      >
+        Loading...
+      </div>
+
+
+      <div
+        *ngIf="
+          !loading &&
+          centers.length === 0
+        "
+        class="empty"
+      >
+        No Cost Centers found.
+      </div>
+
+
+      <div
+        *ngIf="
+          !loading &&
+          centers.length > 0
+        "
+        class="table-wrap list-table-wrap"
+      >
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                SysID
+              </th>
+
+              <th>
+                Cost Center Code
+              </th>
+
+              <th>
+                Cost Center Name
+              </th>
+
+              <th>
+                Activation Code
+              </th>
+
+              <th>
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <tr
+              *ngFor="
+                let center of centers
+              "
+            >
+
+              <td>
+                {{ center.sysId }}
+              </td>
+
+              <td>
+                {{ center.code }}
+              </td>
+
+              <td>
+                {{ center.name }}
+              </td>
+
+              <td>
+                {{
+                  center.activationDeactivationCode
+                  || '-'
+                }}
+              </td>
+
+              <td>
+
+                <div class="row-actions">
+
+                  <button
+                    type="button"
+                    (click)="edit(center)"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    type="button"
+                    class="delete-row"
+                    title="Delete"
+                    (click)="remove(center)"
+                  >
+
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+
+                      <path d="M3 6h18"></path>
+
+                      <path d="M8 6V4h8v2"></path>
+
+                      <path
+                        d="M19 6l-1 14H6L5 6"
+                      ></path>
+
+                      <path d="M10 11v5"></path>
+
+                      <path d="M14 11v5"></path>
+
+                    </svg>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

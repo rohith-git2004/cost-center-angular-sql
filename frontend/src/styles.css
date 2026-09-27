@@ -1,0 +1,955 @@
+/* =========================================
+   GLOBAL
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #edf4f8;
+  color: #152b45;
+}
+
+body {
+  font-size: 14px;
+}
+
+button,
+input,
+select {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================
+   APP
+========================================= */
+
+.app-shell {
+  min-height: 100vh;
+  background: #edf4f8;
+}
+
+
+/* =========================================
+   TOP BAR
+========================================= */
+
+.topbar {
+  height: 68px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 30px;
+
+  background: linear-gradient(
+    90deg,
+    #07145d,
+    #21118a,
+    #07145d
+  );
+
+  color: white;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+  gap: 24px;
+}
+
+.brand-mark {
+  width: 36px;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.search {
+  width: 340px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 12px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  color: #777;
+}
+
+.search span {
+  margin-right: 7px;
+
+  font-size: 19px;
+}
+
+.search input {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   COMPANY
+========================================= */
+
+.company-pill {
+  margin-left: auto;
+  margin-right: auto;
+
+  padding: 10px 22px;
+
+  background: #050b2d;
+
+  border-radius: 3px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.top-icons {
+  font-size: 18px;
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.page {
+  width: 100%;
+  max-width: 950px;
+
+  margin: 0 auto;
+
+  padding: 32px 0 45px;
+}
+
+
+/* =========================================
+   HEADING
+========================================= */
+
+.page-heading {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 14px;
+}
+
+.page-heading h1 {
+  margin: 0;
+
+  font-size: 27px;
+  font-weight: 800;
+}
+
+
+/* =========================================
+   TOP BUTTONS
+========================================= */
+
+.actions {
+  display: flex;
+
+  gap: 10px;
+}
+
+.actions button,
+.list-title button,
+.footer-actions button {
+  height: 32px;
+
+  padding: 0 18px;
+
+  border: 1px solid #b69d68;
+
+  border-radius: 4px;
+
+  background: linear-gradient(
+    #eeddbb,
+    #d6bd8e
+  );
+
+  color: #40382d;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =========================================
+   MAIN CARD
+========================================= */
+
+.card {
+  width: 100%;
+
+  padding: 23px 25px 22px;
+
+  background: #f8fbfd;
+
+  border: 1px solid #91a6b6;
+
+  border-radius: 4px;
+
+  box-shadow:
+    0 5px 15px rgba(70, 90, 105, 0.18);
+}
+
+
+/* =========================================
+   COST CENTER FIELDS
+
+   SysID
+   Code              Name
+========================================= */
+
+.cost-center-fields {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 48px;
+
+  row-gap: 13px;
+}
+
+.sysid-field {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.code-field {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.name-field {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+
+/* =========================================
+   FIELD
+========================================= */
+
+.field {
+  width: 100%;
+}
+
+.field label,
+.activation-yn label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #152b45;
+}
+
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.card input {
+  width: 100%;
+  height: 35px;
+
+  padding: 0 9px;
+
+  border: 1px solid #d5d1bd;
+
+  border-radius: 2px;
+
+  background: #fffef3;
+
+  color: #25384b;
+
+  font-size: 13px;
+
+  outline: none;
+}
+
+.card input:focus {
+  border-color: #718ba3;
+
+  box-shadow:
+    0 0 0 2px rgba(70, 110, 145, 0.12);
+}
+
+
+/* =========================================
+   SECTION HEADINGS
+========================================= */
+
+.card h2 {
+  margin: 21px 0 12px;
+
+  font-size: 19px;
+
+  font-weight: 800;
+
+  color: #17304c;
+}
+
+
+/* =========================================
+   ACTIVATION SECTION
+
+   Y/N
+
+   Code + ...
+                  Name
+========================================= */
+
+.activation-section {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 48px;
+
+  row-gap: 13px;
+
+  align-items: end;
+}
+
+
+/* Y/N */
+
+.activation-yn {
+  grid-column: 1 / 3;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  height: 28px;
+}
+
+.activation-yn label {
+  margin: 0;
+}
+
+.activation-yn input {
+  width: 15px;
+  height: 15px;
+
+  margin: 0;
+
+  padding: 0;
+
+  cursor: pointer;
+}
+
+
+/* CODE */
+
+.activation-code {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+
+/* NAME */
+
+.activation-name {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+
+/* =========================================
+   ACTIVATION CODE LOOKUP
+========================================= */
+
+.lookup-control {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 6px;
+}
+
+.lookup-control input {
+  flex: 1;
+  min-width: 0;
+}
+
+
+/* =========================================
+   ACTIVATION CODE 3-DOT DROPDOWN
+========================================= */
+
+.lookup-button {
+  width: 42px !important;
+  height: 35px !important;
+
+  flex-shrink: 0;
+
+  padding: 0 !important;
+
+  border: 1px solid #b9a273 !important;
+  border-radius: 3px !important;
+
+  background: linear-gradient(
+    #f0dfbd,
+    #d6bd8c
+  ) !important;
+
+  color: #443a2d !important;
+
+  font-size: 14px !important;
+  font-weight: 800 !important;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  /* Remove browser arrow */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+
+/* Dropdown options */
+
+.lookup-button option {
+  font-size: 13px;
+  font-weight: normal;
+  color: #26384b;
+  background: #ffffff;
+}
+
+/* =========================================
+   COMPANY TABLE
+========================================= */
+
+.table-wrap {
+  width: 100%;
+
+  border: 1px solid #d2d0c2;
+
+  background: white;
+
+  overflow: hidden;
+}
+
+.table-wrap table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  table-layout: fixed;
+}
+
+
+/* =========================================
+   TABLE HEADER
+========================================= */
+
+.table-wrap th {
+  height: 58px;
+
+  padding: 9px 12px;
+
+  background: #eee5ce;
+
+  border-right: 1px solid #ddd5c0;
+
+  text-align: left;
+
+  vertical-align: middle;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  color: #26384b;
+}
+
+
+/* =========================================
+   COLUMN WIDTHS
+========================================= */
+
+.table-wrap th:nth-child(1),
+.table-wrap td:nth-child(1) {
+  width: 19%;
+}
+
+.table-wrap th:nth-child(2),
+.table-wrap td:nth-child(2) {
+  width: 25%;
+}
+
+.table-wrap th:nth-child(3),
+.table-wrap td:nth-child(3) {
+  width: 24%;
+}
+
+.table-wrap th:nth-child(4),
+.table-wrap td:nth-child(4) {
+  width: 32%;
+}
+
+
+/* =========================================
+   TABLE BODY
+========================================= */
+
+.table-wrap td {
+  height: 59px;
+
+  padding: 7px 10px;
+
+  border-top: 1px solid #e1dfd7;
+
+  vertical-align: middle;
+
+  background: #ffffff;
+}
+
+
+/* =========================================
+   TABLE INPUT
+========================================= */
+
+.table-wrap td input {
+  width: 100%;
+
+  height: 32px;
+
+  padding: 0 8px;
+
+  border: 1px solid #d4d1bd;
+
+  border-radius: 2px;
+
+  background: #fffef3;
+
+  font-size: 12px;
+
+  outline: none;
+}
+
+
+/* =========================================
+   INITIAL COMPANY LOOKUP ROW
+========================================= */
+
+.company-lookup-row td {
+  height: 59px;
+
+  vertical-align: middle;
+}
+
+.company-lookup-cell {
+  text-align: center !important;
+
+  vertical-align: middle !important;
+}
+
+
+/*
+   IMPORTANT:
+
+   This is NOT a select.
+
+   It is only a visual ... box.
+   No dropdown.
+   No arrow.
+   No options.
+*/
+
+.center-company-dots {
+  width: 58px;
+
+  height: 34px;
+
+  padding: 0;
+
+  border: 1px solid #b9a273;
+
+  border-radius: 3px;
+
+  background: linear-gradient(
+    #f0dfbd,
+    #d6bd8c
+  );
+
+  color: #443a2d;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  text-align: center;
+
+  cursor: default;
+}
+
+
+/* =========================================
+   ACTIONS COLUMN
+========================================= */
+
+.actions-cell {
+  text-align: center !important;
+
+  vertical-align: middle !important;
+}
+
+.row-actions {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 5px;
+
+  white-space: nowrap;
+}
+
+.row-actions button {
+  height: 32px;
+
+  padding: 0 9px;
+
+  border: 1px solid #cfc7b1;
+
+  border-radius: 3px;
+
+  background: #faf7ee;
+
+  color: #403a30;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.row-actions button:hover {
+  background: #eee7d5;
+}
+
+
+/* =========================================
+   DELETE BUTTON
+========================================= */
+
+.delete-row {
+  width: 31px;
+
+  padding: 0 !important;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #555;
+}
+
+
+/* =========================================
+   ADD ROW BUTTON
+========================================= */
+
+.add-row {
+  min-width: 83px;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer-actions {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 9px;
+
+  margin-top: 13px;
+}
+
+.footer-actions button {
+  min-width: 80px;
+}
+
+.footer-actions .primary {
+  background: linear-gradient(
+    #ead5aa,
+    #d2b881
+  );
+}
+
+
+/* =========================================
+   NOTICE
+========================================= */
+
+.notice {
+  margin-bottom: 12px;
+
+  padding: 9px 12px;
+
+  border-radius: 4px;
+
+  font-size: 13px;
+}
+
+.success {
+  background: #e5f6e9;
+
+  color: #17652c;
+
+  border: 1px solid #a8d8b1;
+}
+
+.error {
+  background: #fff0f0;
+
+  color: #8d1f1f;
+
+  border: 1px solid #e1aaaa;
+}
+
+
+/* =========================================
+   LIST
+========================================= */
+
+.list-card {
+  padding: 21px 24px;
+}
+
+.list-title {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 15px;
+}
+
+.list-title strong {
+  font-size: 19px;
+}
+
+.list-title span {
+  margin-left: 8px;
+
+  color: #788797;
+
+  font-size: 12px;
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty {
+  padding: 25px;
+
+  text-align: center;
+
+  color: #6d7780;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 800px) {
+
+  .topbar {
+    height: auto;
+
+    padding: 12px 15px;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+  }
+
+  .search {
+    order: 3;
+
+    width: 100%;
+  }
+
+  .company-pill {
+    max-width: 55%;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    font-size: 10px;
+  }
+
+  .page {
+    padding: 22px 12px 35px;
+  }
+
+  .cost-center-fields,
+  .activation-section {
+    grid-template-columns: 1fr;
+  }
+
+  .sysid-field,
+  .code-field,
+  .name-field,
+  .activation-yn,
+  .activation-code,
+  .activation-name {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  .table-wrap table {
+    min-width: 850px;
+  }
+
+}
+
+/* =========================================
+   LIST TABLE
+   5 COLUMNS
+========================================= */
+
+.list-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.list-table-wrap table {
+  width: 100%;
+  min-width: 850px;
+  table-layout: fixed;
+}
+
+
+/* SysID */
+
+.list-table-wrap th:nth-child(1),
+.list-table-wrap td:nth-child(1) {
+  width: 12%;
+}
+
+
+/* Cost Center Code */
+
+.list-table-wrap th:nth-child(2),
+.list-table-wrap td:nth-child(2) {
+  width: 20%;
+}
+
+
+/* Cost Center Name */
+
+.list-table-wrap th:nth-child(3),
+.list-table-wrap td:nth-child(3) {
+  width: 25%;
+}
+
+
+/* Activation Code */
+
+.list-table-wrap th:nth-child(4),
+.list-table-wrap td:nth-child(4) {
+  width: 18%;
+}
+
+
+/* Actions */
+
+.list-table-wrap th:nth-child(5),
+.list-table-wrap td:nth-child(5) {
+  width: 25%;
+}
+
+
+/* Keep action buttons fully visible */
+
+.list-table-wrap td:last-child {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.list-table-wrap td:last-child .row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.list-table-wrap td:last-child .row-actions > button {
+  flex-shrink: 0;
+}
+
+
+/* Edit button */
+
+.list-table-wrap td:last-child .row-actions > button:not(.delete-row) {
+  min-width: 55px;
+  height: 32px;
+  padding: 0 10px;
+}
+
+
+/* Delete button */
+
+.list-table-wrap td:last-child .delete-row {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+}
